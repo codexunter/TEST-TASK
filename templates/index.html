@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Weather</title>
+</head>
+<style>
+	*{
+		box-sizing: border-box; padding: 0; margin: 0;
+	}
+	html, body{
+		width: 100%; height: 100%; overflow: hidden;
+	}
+	body{
+		display: flex; flex-direction: column; justify-content: center; align-items: center;
+		background-color: #333; row-gap: 5%; font-size: large;
+	}
+	#form_1{
+		display: flex; flex-direction: column; justify-content: space-around; align-items: center;
+		width: 100%; height: 30%; background-color: #333;
+	}
+	#form_1 input:first-child{
+		border: none; padding: 1vh 1vw; border-radius: 2vw; width: 20vw; height: auto; font-size: large;
+	}
+	#form_1 input:nth-child(2){
+		border: none; padding: 1vh 1vw; border-radius: 2vw; width: 8vw; height: auto;
+		background-color: palegreen; font-size: large;
+	}
+	#form_1 input:nth-child(2):hover{
+		background-color: paleturquoise;
+	}
+	#output{
+		display: flex; flex-direction: column; justify-content: start; align-items: center; row-gap: 5%;
+		width: 100%; height: 40%; background-color: #333;
+	}
+	#output div{
+		display: flex; flex-direction: row; justify-content: center; align-items: center; row-gap: 5%;
+		width: 100%; background-color: #333; color: white;
+	}
+	.parameter{
+		width: 8%; text-align: start;
+	}
+	.value{
+		width: 12%; text-align: end;
+	}
+	#form_2{
+		display: flex; flex-direction: column; justify-content: space-around; align-items: center;
+		width: 100%; height: 20%; background-color: #333;
+	}
+	button{
+		border: none; padding: 1vh 1vw; border-radius: 2vw; width: 12vw; height: auto;
+		background-color: palegreen; font-size: large;
+	}
+	button:hover{
+		background-color: paleturquoise;
+	}
+</style>
+<body onload="insert();">
+	<form action="/" method="post" id="form_1">
+		<input type="text" name="town" id="town" placeholder="Напишите название города" required autofocus="true"/>
+		<input type="submit" value="Показать"/>
+		<input style="display: none;" type="hidden" name="form_name" value="form-1"/>
+	</form>
+	<div id="output">
+		<div>
+			<span class="parameter">Температура: </span><span class="value">{{ temperature | safe }} {{ temp_unit | safe }}</span>
+		</div>
+		<div>
+			<span class="parameter">Скорость ветра: </span><span class="value">{{ windspeed | safe }} {{ wind_unit | safe }}</span>
+		</div>
+		<div>
+			<span class="parameter">Описание: </span><span class="value">{{ description | safe }}</span>
+		</div>
+	</div>
+	<form action="/" method="post" id="form_2">
+		<button>История запросов</button>
+		<input style="display: none;" type="hidden" name="form_name" value="form-2"/>
+	</form>
+	<div class="hide" style="display: none;">{{ preset | safe }}</div>
+</body>
+<script>
+	function insert(){
+		setTimeout(() => {
+			const val=document.getElementsByClassName('hide')[0].innerHTML;
+			if(val!='')
+				document.getElementById('town').value=val;
+		}, 500);
+	}
+</script>
+</html>
